@@ -51,7 +51,7 @@ class AddContactTableViewController: UITableViewController {
     
     var phoneNumbers = [Phone]()
     var newContact: Contact?
-    //If contactToEdit get passed then update phoneNumbers
+    // If contactToEdit get passed then update phoneNumbers
     var contactToEdit: Contact? {
         didSet{
             if let numbers = contactToEdit?.phoneNumbers?.array as? [Phone] {
@@ -88,7 +88,7 @@ class AddContactTableViewController: UITableViewController {
         if section == 0 {
             return 3
         }
-        //Adding 1 row for "Add new contact"
+        // Adding 1 row for "Add new contact"
         return 1 + phoneNumbers.count
     }
     
@@ -143,11 +143,8 @@ class AddContactTableViewController: UITableViewController {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
             (action, indexPath) in
             
-            //First get the contact we want to delete from the fetchedResultController
-            //then delete it from the managedContext and save changes.
-            let phone = self.phoneNumbers.remove(at: indexPath.row - 1)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            phone.delete()
+            // TODO: Get the phone you want to delete from the phone List
+            // TODO: Delete it from the managedContext and save changes.
         })
         
         deleteAction.backgroundColor = UIColor.red
@@ -171,23 +168,17 @@ class AddContactTableViewController: UITableViewController {
     
     @IBAction func saveDidPress(_ sender: UIBarButtonItem) {
         
-        //Check if we're create a new contact
-        //In case create and save a new contact in the database with
-        //data inside the textfields
+        // Check if we're creating a new contact
+        // TODO: Create and save a new contact in the database with data inside the textfields
         let firstName = StaticCell.firstName.value(for: tableView)
         let lastName = StaticCell.lastName.value(for: tableView)
         let email = StaticCell.email.value(for: tableView)
         if contactToEdit == nil {
-            let newContact = Contact.save(firstName: firstName, lastName: lastName, email: email)
-            for phone in phoneNumbers {
-                phone.contact = newContact
-            }
-            //Save changes and call the delegate
-            CoreDataStack.shared.saveContext()
+            // TODO: Save changes and call the delegate
             delegate?.addContactTableViewControllerDidSave(self)
         }
-        //If we're editing a contact
-        //then update its info with the ones in the textfields
+        // If we're editing a contact
+        // TODO: Update its info with the ones in the textfields
         else {
             contactToEdit?.name = firstName
             contactToEdit?.surname = lastName
@@ -195,7 +186,7 @@ class AddContactTableViewController: UITableViewController {
             for phone in phoneNumbers {
                 phone.contact = contactToEdit
             }
-            //Save changes and back to ContactsList
+            // Save changes and back to ContactsList
             CoreDataStack.shared.saveContext()
             performSegue(withIdentifier: "showContactList", sender: self)
         }
@@ -209,21 +200,17 @@ class AddContactTableViewController: UITableViewController {
             guard let textField = alert.textFields?.first, let numberToSave = textField.text else {
                 return
             }
-            let newPhone = Phone(context: CoreDataStack.shared.managedContext)
-            newPhone.number = numberToSave
-            self.phoneNumbers.append(newPhone)
             
-            print("aggiunto")
+            // TODO: Create a new phoneobject and add it to the phone lists
             self.tableView.reloadData()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        //Add the buttons
+        // Add the buttons
         alert.addTextField()
         alert.addAction(saveAction)
         alert.addAction(cancelAction)
         
         return alert
     }
-
 }

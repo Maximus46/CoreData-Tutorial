@@ -11,8 +11,5 @@ import CoreData
 
 @objc(Phone)
 public class Phone: NSManagedObject {
-    func delete(){
-        CoreDataStack.shared.managedContext.delete(self)
-        CoreDataStack.shared.saveContext()
-    }
+    //TODO: Create a method to delete a contact and save changes
 }

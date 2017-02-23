@@ -25,12 +25,7 @@ class PhoneCell: UITableViewCell {
     }
     
     func configure(with phone: Phone, at index: Int){
-        guard let number = phone.number else {
-            print("Could not get phone's number")
-            return
-        }
         idLabel.text = "Phone " + String(index)
-        numberTextField.text = number
+        numberTextField.text = phone.number
     }
-
 }

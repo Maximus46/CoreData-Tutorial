@@ -26,12 +26,7 @@ class ContactCell: UITableViewCell {
     
     
     func configure(with contact: Contact){
-        guard let name = contact.name, let surname = contact.surname else {
-            print("Could not get contact's name")
-            return
-        }
-        nameLabel.text = name
-        surnameLabel.text = surname
+        nameLabel.text = contact.name
+        surnameLabel.text = contact.surname
     }
-
 }
